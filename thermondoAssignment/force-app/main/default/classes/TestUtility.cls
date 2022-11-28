@@ -1,0 +1,104 @@
+/*
+* Name            :    TestUtility
+* Description     :    This is the Utility method for the test class for test data creation.
+* Created Date    :    [24th November , 2022]
+* Created By      :    [Bonoshree Mondal]
+*
+* Date Modified        Modified By             Description of the update
+   24th-Nov-2022      Bonoshree Mondal          Created
+
+*/
+public class TestUtility {
+  
+    public static Account createAccount(Boolean isInsert) {
+        String recordTypeId  = Schema.getGlobalDescribe().get('Account').getDescribe().getRecordTypeInfosByName().get('Personenaccount').getRecordTypeId();
+        //Account account = new Account(Name = 'Test Account');
+		Account account = new Account(
+          RecordTypeID=recordTypeId ,
+          FirstName='Test FName',
+          LastName='Test LName',
+          PersonMailingStreet='test@yahoo.com',
+          PersonMailingPostalCode='12345',
+          PersonMailingCity='SFO',
+          PersonEmail='test@yahoo.com',
+          PersonHomePhone='1234567',
+          PersonMobilePhone='12345678' 
+        );
+        if(isInsert) {
+          insert account;
+        }
+
+        return account;
+    }
+    
+    public static Contract createContract(Boolean isInsert) {
+        Account acc = TestUtility.createAccount(true);
+        Contract c = new Contract(Name = 'Test Account', AccountId = acc.Id, Status = 'Draft');
+
+        if(isInsert) {
+          insert c;
+        }
+
+        return c;
+    }
+    
+    public static List<Order> createOrder(Boolean isInsert, Contract c, Integer count) {
+        Id pricebookId = Test.getStandardPricebookId();
+        List<Order> orderList = new List<Order>();
+        for(Integer i= 0; i < count; i++){
+            Order o = new Order(Name = 'Test Account'+i, AccountId = c.AccountId, Status = 'Draft', EffectiveDate = Date.today(), Pricebook2Id =  pricebookId);
+        	orderList.add(o);
+        }
+
+        if(isInsert) {
+          insert orderList;
+        }
+        TestUtility.createOrderLineItems(true, orderList);
+        return orderList;
+    }
+    
+    public static Product2 createProduct(Boolean isInsert) {
+        // Insert Product
+        Product2 p = new Product2();
+        p.Name = ' Test Product ';
+        p.Description = 'Test Product Entry 1';
+        p.productCode = 'ABC';
+        p.isActive = true;
+        insert p;
+        return p;
+    }
+    
+    public static PricebookEntry createPricebook() {
+        // Insert Product
+        Id pricebookId = Test.getStandardPricebookId();
+        PricebookEntry standardPrice = new PricebookEntry();
+        standardPrice.Pricebook2Id = pricebookId;
+        standardPrice.UnitPrice = 1;
+        standardPrice.IsActive = true;
+        standardPrice.UseStandardPrice = false;
+        return standardPrice;
+    }
+    
+    public static List<OrderItem> createOrderLineItems(Boolean isInsert, List<Order> orderList){
+        Product2 p = TestUtility.createProduct(true);
+        PricebookEntry standardPrice = TestUtility.createPricebook();
+        standardPrice.Product2Id = p.Id;
+        insert standardPrice;
+        List<OrderItem> oliList = new List<OrderItem>();
+        for(Order o : orderList){
+            OrderItem i = new OrderItem();
+            i.OrderId = o.id;
+            i.Quantity = 24;
+            i.UnitPrice = 240;
+            i.Product2id = p.id;
+            i.PricebookEntryId=standardPrice.id;
+            oliList.add(i);
+        }
+        insert oliList;
+        return oliList;
+    }
+    
+    
+   
+    
+}

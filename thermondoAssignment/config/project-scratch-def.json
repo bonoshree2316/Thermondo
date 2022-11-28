@@ -1,0 +1,29 @@
+{
+  "orgName": "Thermondo Coding Challenge",
+  "edition": "Enterprise",
+  "adminEmail": "bonoshree2316@gmail.com",
+  "description": "This is created for the coding challenge",
+  "hasSampleData": true,
+  "features": ["EnableSetPasswordInApi", "PersonAccounts", "ServiceCloud", "FieldService:5"],
+  "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    },
+    "mobileSettings": {
+      "enableS1EncryptedStoragePref2": false
+    },
+    "languageSettings": {
+      "enableTranslationWorkbench": true
+    },
+    "fieldServiceSettings": {
+      "enableWorkOrders": true
+    },
+    "omniChannelSettings": {
+      "enableOmniChannel": true,
+      "enableOmniSkillsRouting": true
+    },
+    "emailAdministrationSettings": {
+      "enableEnhancedEmailEnabled": true
+    }
+  }
+}

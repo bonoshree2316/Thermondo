@@ -18,5 +18,6 @@ The `sfdx-project.json` file contains useful configuration information for your 
 - [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
 
 ## Future Scope:
-we can create error handling mechanism
-we can create a custom log object and store the log data for success or failure callouts
+- we can create error handling mechanism
+
+- we can create a custom log object and store the log data for success or failure callouts
